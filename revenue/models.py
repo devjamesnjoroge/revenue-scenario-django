@@ -29,4 +29,10 @@ class Segment(models.Model):
     def __str__(self):
         return self.segment_name
 
+class CurrencyRepository(models.Model):
+    currency_name = models.CharField(max_length=50)
+    currency_code = models.CharField(max_length=3)
+
+    def __str__(self):
+        return self.currency_name
         
