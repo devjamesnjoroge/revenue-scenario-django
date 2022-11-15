@@ -66,3 +66,16 @@ class Project(models.Model):
 
     def __str__(self):
         return self.project_name
+
+class ProductType(models.Model):
+    product_type_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.product_type_name
+
+class Product(models.Model):
+    product_name = models.CharField(max_length=50)
+    product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.product_name
