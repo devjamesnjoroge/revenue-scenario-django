@@ -44,3 +44,10 @@ class ExchangeRateLibrary(models.Model):
 
     def __str__(self):
         return self.currency.currency_name
+
+class Exchange_rate_has_current_repository(models.Model):
+    currency = models.ForeignKey(CurrencyRepository, on_delete=models.CASCADE)
+    exchange_rate = models.ForeignKey(ExchangeRateLibrary, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.currency.currency_name
