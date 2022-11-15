@@ -51,3 +51,18 @@ class Exchange_rate_has_current_repository(models.Model):
 
     def __str__(self):
         return self.currency.currency_name
+
+class Project(models.Model):
+    project_name = models.CharField(max_length=50)
+    project_description = models.CharField(max_length=200)
+    project_code = models.CharField(max_length=50)
+    project_cost_code = models.CharField(max_length=50)
+    project_start_date = models.DateField()
+    project_end_date = models.DateField()
+    project_exchange_rate = models.ForeignKey(ExchangeRateLibrary, on_delete=models.CASCADE)
+    project_country = models.ForeignKey(FiscalCountry, on_delete=models.CASCADE)
+    project_segment = models.ForeignKey(Segment, on_delete=models.CASCADE)
+    project_location = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.project_name
