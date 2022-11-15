@@ -40,7 +40,7 @@ class Exchange_rate_has_current_repositorySerializer(serializers.ModelSerializer
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('project_name', 'project_description', 'project_code', 'project_cost_code', 'project_start_date', 'project_end_date', 'project_exchange_rate', 'project_country')
+        fields = ('project_name', 'project_description', 'project_code', 'project_cost_code', 'project_start_date', 'project_end_date', 'project_exchange_rate', 'project_country', 'project_segment')
 
 class ProductTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,18 +50,18 @@ class ProductTypeSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('product_name', 'product_description', 'product_type', 'product_segment')
+        fields = ('product_name','product_type')
 
 class RevenueScenarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = RevenueScenario
-        fields = ('revenue_scenario_name', 'revenue_scenario_description', 'revenue_scenario_start_date', 'revenue_scenario_end_date', 'revenue_scenario_project')
+        fields = ('revenue_scenario_name',)
 
 class RevenueScenarioHasProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = RevenueScenarioHasProduct
-        fields = ('revenue_scenario', 'product')
+        fields = ('revenue_scenario', 'revenue_year', 'revenue_value', 'revenue_unit_numerator', 'revenue_unit_denominator', 'product')
 
-        
+
 
     
