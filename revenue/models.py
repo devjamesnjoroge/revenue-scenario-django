@@ -35,4 +35,12 @@ class CurrencyRepository(models.Model):
 
     def __str__(self):
         return self.currency_name
-        
+
+class ExchangeRateLibrary(models.Model):
+    currency = models.ForeignKey(CurrencyRepository, on_delete=models.CASCADE)
+    exchange_rate = models.FloatField()
+    exchange_rate_date = models.DateField()
+    exchange_rate_conversion_value = models.FloatField()
+
+    def __str__(self):
+        return self.currency.currency_name
