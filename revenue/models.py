@@ -9,7 +9,7 @@ class Region(models.Model):
         return self.RegionName
 
 class FiscalCountry(models.Model):
-    FiscalCountryName = models.CharField(max_length=45)
+    FiscalCountryName = models.CharField(max_length=45, unique=True)
     FiscalCountryCode = models.CharField(max_length=3)
     Region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
@@ -31,7 +31,7 @@ class Segment(models.Model):
 
 class CurrencyRepository(models.Model):
     CurrencyName = models.CharField(max_length=45, unique=True)
-    CurrencyCode = models.CharField(max_length=45, unique=True)
+    CurrencyCode = models.CharField(max_length=45)
 
     def __str__(self):
         return self.CurrencyName
