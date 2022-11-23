@@ -38,7 +38,7 @@ class CurrencyRepository(models.Model):
 
 class ExchangeRateLibrary(models.Model):
     ExchangeRateLibraryName = models.FloatField(unique=True)
-    CurrencyName = models.CharField(max_length=45, unique=True, )
+    CurrencyName = models.CharField(max_length=45)
     Year = models.DateField()
     ExchangeRateConversionValue = models.FloatField()
     def __str__(self):
