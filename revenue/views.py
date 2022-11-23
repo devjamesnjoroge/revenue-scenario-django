@@ -56,7 +56,7 @@ class Exchange_rate_has_current_repositoryViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Exchange_rate_has_current_repository.objects.all().order_by('id')
+    queryset = ExchangeRateLibrary_has_CurrencyRepository.objects.all().order_by('id')
     serializer_class = Exchange_rate_has_current_repositorySerializer
 
 class ProjectViewSet(viewsets.ModelViewSet):
