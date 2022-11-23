@@ -30,8 +30,8 @@ class Segment(models.Model):
         return self.SegmentName
 
 class CurrencyRepository(models.Model):
-    CurrencyName = models.CharField(max_length=45)
-    CurrencyCode = models.CharField(max_length=45)
+    CurrencyName = models.CharField(max_length=45, unique=True)
+    CurrencyCode = models.CharField(max_length=45, unique=True)
 
     def __str__(self):
         return self.CurrencyName
@@ -53,45 +53,45 @@ class ExchangeRateLibrary_has_CurrentRepository(models.Model):
 
 class Project(models.Model):
     ProjectName = models.CharField(max_length=45, unique=True)
-    ProjectDescription = models.CharField(max_length=200)
+    ProjectDesc = models.CharField(max_length=200)
     ProjectCode = models.CharField(max_length=10, unique=True)
     ProjectCostCode = models.CharField(max_length=20, unique=True)
     ProjectStartDate = models.DateField()
     ProjectEndDate = models.DateField()
-    ProjectExchange_rate = models.ForeignKey(ExchangeRateLibrary, on_delete=models.CASCADE)
+    ExchangeRateLibrary = models.ForeignKey(ExchangeRateLibrary, on_delete=models.CASCADE)
     ProjectCountry = models.ForeignKey(FiscalCountry, on_delete=models.CASCADE)
     ProjectSegment = models.ForeignKey(Segment, on_delete=models.CASCADE)
     ProjectLocation = models.CharField(max_length=45)
 
     def __str__(self):
-        return self.project_name
+        return self.ProjectName
 
 class ProductType(models.Model):
-    product_type_name = models.CharField(max_length=45)
+    ProductTypeName = models.CharField(max_length=45)
 
     def __str__(self):
-        return self.product_type_name
+        return self.ProductTypeName
 
 class Product(models.Model):
-    product_name = models.CharField(max_length=45)
-    product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
+    ProductName = models.CharField(max_length=45)
+    ProductType = models.ForeignKey(ProductType, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.product_name
+        return self.ProductName
 
 class RevenueScenario(models.Model):
-    revenue_scenario_name = models.CharField(max_length=45)
+    RevenueScenarioName = models.CharField(max_length=45, unique=True)
 
     def __str__(self):
-        return self.revenue_scenario_name
+        return self.RevenueScenarioName
 
 class RevenueScenarioHasProduct(models.Model):
-    revenue_scenario = models.ForeignKey(RevenueScenario, on_delete=models.CASCADE)
+    RevenueScenario = models.ForeignKey(RevenueScenario, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    revenue_year = models.DateField()
-    revenue_value = models.FloatField()
-    revenue_unit_numerator = models.CharField(max_length=45)
-    revenue_unit_denominator = models.CharField(max_length=45)
+    RevenueYear = models.DateField()
+    RevenueValue = models.FloatField()
+    RevenueUnitNumerator = models.CharField(max_length=45)
+    RevenueUnitDenominator = models.CharField(max_length=45)
 
     def __str__(self):
-        return self.revenue_scenario.revenue_scenario_name
+        return self.RevenueScenario.RevenueScenarioName
