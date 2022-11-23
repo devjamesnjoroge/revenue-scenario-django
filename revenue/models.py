@@ -3,66 +3,65 @@ from django.db import models
 # Create your models here.
 
 class Region(models.Model):
-    region_name = models.CharField(max_length=45)
+    RegionName = models.CharField(max_length=45)
 
     def __str__(self):
-        return self.region_name
+        return self.RegionName
 
 class FiscalCountry(models.Model):
-    country_name = models.CharField(max_length=45)
-    country_code = models.CharField(max_length=3)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    FiscalCountryName = models.CharField(max_length=45)
+    FiscalCountryCode = models.CharField(max_length=3)
+    Region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.country_name
+        return self.FiscalCountryName
 
 class Industry(models.Model):
-    industry_name = models.CharField(max_length=45)
+    IndustryName = models.CharField(max_length=45)
 
     def __str__(self):
-        return self.industry_name
+        return self.IndustryName
 
 class Segment(models.Model):
-    segment_name = models.CharField(max_length=45)
-    industry = models.ForeignKey(Industry, on_delete=models.CASCADE)
+    SegmentName = models.CharField(max_length=45)
+    Industry = models.ForeignKey(Industry, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.segment_name
+        return self.SegmentName
 
 class CurrencyRepository(models.Model):
-    currency_name = models.CharField(max_length=45)
-    currency_code = models.CharField(max_length=45)
+    CurrencyName = models.CharField(max_length=45)
+    CurrencyCode = models.CharField(max_length=45)
 
     def __str__(self):
-        return self.currency_name
+        return self.CurrencyName
 
 class ExchangeRateLibrary(models.Model):
-    currency = models.ForeignKey(CurrencyRepository, on_delete=models.CASCADE)
-    exchange_rate = models.FloatField()
-    exchange_rate_date = models.DateField()
-    exchange_rate_conversion_value = models.FloatField()
+    ExchangeRateLibraryName = models.FloatField(unique=True)
+    CurrencyName = models.CharField(max_length=45, unique=True, )
+    Year = models.DateField()
+    ExchangeRateConversionValue = models.FloatField()
+    def __str__(self):
+        return self.ExchangeRateLibraryName
+
+class ExchangeRateLibrary_has_CurrentRepository(models.Model):
+    CurrencyRepository = models.ForeignKey(CurrencyRepository, on_delete=models.CASCADE)
+    ExchangeRateLibrary = models.ForeignKey(ExchangeRateLibrary, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.currency.currency_name
-
-class Exchange_rate_has_current_repository(models.Model):
-    currency = models.ForeignKey(CurrencyRepository, on_delete=models.CASCADE)
-    exchange_rate = models.ForeignKey(ExchangeRateLibrary, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.currency.currency_name
+        return self.CurrencyRepository.CurrencyName
 
 class Project(models.Model):
-    project_name = models.CharField(max_length=45)
-    project_description = models.CharField(max_length=200)
-    project_code = models.CharField(max_length=10)
-    project_cost_code = models.CharField(max_length=20)
-    project_start_date = models.DateField()
-    project_end_date = models.DateField()
-    project_exchange_rate = models.ForeignKey(ExchangeRateLibrary, on_delete=models.CASCADE)
-    project_country = models.ForeignKey(FiscalCountry, on_delete=models.CASCADE)
-    project_segment = models.ForeignKey(Segment, on_delete=models.CASCADE)
-    project_location = models.CharField(max_length=45)
+    ProjectName = models.CharField(max_length=45, unique=True)
+    ProjectDescription = models.CharField(max_length=200)
+    ProjectCode = models.CharField(max_length=10, unique=True)
+    ProjectCostCode = models.CharField(max_length=20, unique=True)
+    ProjectStartDate = models.DateField()
+    ProjectEndDate = models.DateField()
+    ProjectExchange_rate = models.ForeignKey(ExchangeRateLibrary, on_delete=models.CASCADE)
+    ProjectCountry = models.ForeignKey(FiscalCountry, on_delete=models.CASCADE)
+    ProjectSegment = models.ForeignKey(Segment, on_delete=models.CASCADE)
+    ProjectLocation = models.CharField(max_length=45)
 
     def __str__(self):
         return self.project_name
