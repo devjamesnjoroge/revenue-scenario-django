@@ -1,96 +1,171 @@
-from django.shortcuts import render
+# Imports for GET, POST, PUT, DELETE methods for API
+from rest_framework import generics
+from rest_framework import mixins
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+# Import models
 from .models import *
+# Import serializers
 from .serializers import *
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from rest_framework import permissions
 
 # Create your views here.
 
-def index(request):
-    return render(request, 'index.html')
-
-class RegionViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Region.objects.all().order_by('id')
+class RegionViewSet(mixins.ListModelMixin,
+                    mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+    queryset = Region.objects.all
     serializer_class = RegionSerializer
 
-class FiscalCountryViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = FiscalCountry.objects.all().order_by('id')
-    serializer_class = FiscalCountrySerializer
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-class IndustryViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Industry.objects.all().order_by('id')
-    serializer_class = IndustrySerializer
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
-class SegmentViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Segment.objects.all().order_by('id')
-    serializer_class = SegmentSerializer
 
-class CurrencyRepositoryViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = CurrencyRepository.objects.all().order_by('id')
-    serializer_class = CurrencyRepositorySerializer
+class FiscalCountryViewSet(mixins.ListModelMixin,
+                            mixins.CreateModelMixin,
+                            mixins.RetrieveModelMixin,
+                            mixins.UpdateModelMixin,
+                            mixins.DestroyModelMixin,
+                            generics.GenericAPIView):
+     queryset = FiscalCountry.objects.all
+     serializer_class = FiscalCountrySerializer
+    
+     def get(self, request, *args, **kwargs):
+          return self.list(request, *args, **kwargs)
+    
+     def post(self, request, *args, **kwargs):
+          return self.create(request, *args, **kwargs)
 
-class ExchangeRateLibraryViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = ExchangeRateLibrary.objects.all().order_by('id')
-    serializer_class = ExchangeRateLibrarySerializer
 
-class Exchange_rate_has_current_repositoryViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = ExchangeRateLibrary_has_CurrencyRepository.objects.all().order_by('id')
-    serializer_class = Exchange_rate_has_current_repositorySerializer
+class IndustryViewSet(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        mixins.DestroyModelMixin,
+                        generics.GenericAPIView):
+     queryset = Industry.objects.all
+     serializer_class = IndustrySerializer
+    
+     def get(self, request, *args, **kwargs):
+          return self.list(request, *args, **kwargs)
+    
+     def post(self, request, *args, **kwargs):
+          return self.create(request, *args, **kwargs)
 
-class ProjectViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Project.objects.all().order_by('id')
-    serializer_class = ProjectSerializer
 
-class ProductTypeViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = ProductType.objects.all().order_by('id')
-    serializer_class = ProductTypeSerializer
+class SegmentViewSet(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        mixins.DestroyModelMixin,
+                        generics.GenericAPIView):
+     queryset = Segment.objects.all
+     serializer_class = SegmentSerializer
+    
+     def get(self, request, *args, **kwargs):
+          return self.list(request, *args, **kwargs)
+    
+     def post(self, request, *args, **kwargs):
+          return self.create(request, *args, **kwargs)
 
-class ProductViewSet(viewsets.ModelViewSet):
 
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Product.objects.all().order_by('id')
-    serializer_class = ProductSerializer
+class CurrencyRepositoryViewSet(mixins.ListModelMixin,
+                                mixins.CreateModelMixin,
+                                mixins.RetrieveModelMixin,
+                                mixins.UpdateModelMixin,
+                                mixins.DestroyModelMixin,
+                                generics.GenericAPIView):
+     queryset = CurrencyRepository.objects.all
+     serializer_class = CurrencyRepositorySerializer
+    
+     def get(self, request, *args, **kwargs):
+          return self.list(request, *args, **kwargs)
+    
+     def post(self, request, *args, **kwargs):
+          return self.create(request, *args, **kwargs)
 
-class RevenueScenarioViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = RevenueScenario.objects.all().order_by('id')
-    serializer_class = RevenueScenarioSerializer
 
-class RevenueScenarioHasProductViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = RevenueScenarioHasProduct.objects.all().order_by('id')
-    serializer_class = RevenueScenarioHasProductSerializer
+class ExchangeRateLibraryViewSet(mixins.ListModelMixin,
+                                mixins.CreateModelMixin,
+                                mixins.RetrieveModelMixin,
+                                mixins.UpdateModelMixin,
+                                mixins.DestroyModelMixin,
+                                generics.GenericAPIView):
+     queryset = ExchangeRateLibrary.objects.all
+     serializer_class = ExchangeRateLibrarySerializer
+    
+     def get(self, request, *args, **kwargs):
+          return self.list(request, *args, **kwargs)
+    
+     def post(self, request, *args, **kwargs):
+          return self.create(request, *args, **kwargs)
+
+
+class ExchangeRateLibrary_has_CurrentRepositoryViewSet(mixins.ListModelMixin,
+                                                        mixins.CreateModelMixin,
+                                                        mixins.RetrieveModelMixin,
+                                                        mixins.UpdateModelMixin,
+                                                        mixins.DestroyModelMixin,
+                                                        generics.GenericAPIView):
+     queryset = ExchangeRateLibrary_has_CurrentRepository
+     serializer_class = ExchangeRateLibrary_has_CurrentRepositorySerializer
+
+     def get(self, request, *args, **kwargs):
+         return self.list(request, *args, **kwargs)
+        
+     def post(self, request, *args, **kwargs):
+         return self.create(request, *args, **kwargs)
+
+
+class Project(mixins.ListModelMixin,
+                mixins.CreateModelMixin,
+                mixins.RetrieveModelMixin,
+                mixins.UpdateModelMixin,
+                mixins.DestroyModelMixin,
+                generics.GenericAPIView):
+     queryset = Project.objects.all
+     serializer_class = ProjectSerializer
+    
+     def get(self, request, *args, **kwargs):
+          return self.list(request, *args, **kwargs)
+    
+     def post(self, request, *args, **kwargs):
+          return self.create(request, *args, **kwargs)
+
+class ProductTypeViewSet(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        mixins.RetrieveModelMixin,
+                        mixins.UpdateModelMixin,
+                        mixins.DestroyModelMixin,
+                        generics.GenericAPIView):
+     queryset = ProductType.objects.all
+     serializer_class = ProductTypeSerializer
+    
+     def get(self, request, *args, **kwargs):
+          return self.list(request, *args, **kwargs)
+    
+     def post(self, request, *args, **kwargs):
+          return self.create(request, *args, **kwargs)
+
+
+# Product view. 
+class ProductViewSet(mixins.ListModelMixin,
+                    mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+     queryset = Product.objects.all
+     serializer_class = ProductSerializer
+
+     def get(self, request, *args, **kwargs):
+         return self.list(request, *args, **kwargs)
+
+     def post(self, request, *args, **kwargs):
+         return self

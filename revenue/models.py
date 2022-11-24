@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 
+def year_choices():
+    return [(r,r) for r in range(2000, 2031)]
+
 class Region(models.Model):
     RegionName = models.CharField(max_length=45, unique=True)
 
@@ -37,12 +40,12 @@ class CurrencyRepository(models.Model):
         return self.CurrencyName
 
 class ExchangeRateLibrary(models.Model):
-    ExchangeRateLibraryName = models.FloatField(unique=True)
+    ExchangeRateLibraryName = models.CharField(max_length=45)
     CurrencyName = models.CharField(max_length=45)
-    Year = models.DateField()
+    Year = models.IntegerField(choices=year_choices())
     ExchangeRateConversionValue = models.FloatField()
     def __str__(self):
-        return self.ExchangeRateLibraryName
+        return self.CurrencyName
 
 class ExchangeRateLibrary_has_CurrentRepository(models.Model):
     CurrencyRepository = models.ForeignKey(CurrencyRepository, on_delete=models.CASCADE)
@@ -88,7 +91,7 @@ class RevenueScenario(models.Model):
 class RevenueScenarioHasProduct(models.Model):
     RevenueScenario = models.ForeignKey(RevenueScenario, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    RevenueYear = models.DateField()
+    RevenueYear = models.IntegerField(choices=year_choices())
     RevenueValue = models.FloatField()
     RevenueUnitNumerator = models.CharField(max_length=45)
     RevenueUnitDenominator = models.CharField(max_length=45)

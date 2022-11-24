@@ -5,62 +5,68 @@ from .models import *
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Region
-        fields = "__all__"
+        fields = ("id", "RegionName")
 
 class FiscalCountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = FiscalCountry
-        fields = "__all__"
+        fields = ("id", "FiscalCountryName", "Region_id", "FiscalCountryCode")
 
 class IndustrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Industry
-        fields = "__all__"
+        fields = ("id", "IndustryName")
 
 class SegmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Segment
-        fields = "__all__"
+        fields = ("id", "SegmentName", "Industry_id")
 
 class CurrencyRepositorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CurrencyRepository
-        fields = "__all__"
+        fields = ("id", "CurrencyName", "CurrencyCode")
 
 class ExchangeRateLibrarySerializer(serializers.ModelSerializer):
     class Meta:
         model = ExchangeRateLibrary
-        fields = "__all__"
+        fields = ("id", "ExchangeRateLibraryName", "CurrencyName", "Year", "ExchangeRateConversionValue")
 
-class Exchange_rate_has_current_repositorySerializer(serializers.ModelSerializer):
+class ExchangeRateLibrary_has_CurrentRepositorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ExchangeRateLibrary_has_CurrentRepository
-        fields = "__all__"
+        fields = ("id", "CurrencyRepository_id", "ExchangeRateLibrary_id")
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = "__all__"
+        fields = ("id", "ProjectName", "ProjectDesc", "ProjectCode", "ProjectCostCode", "ProjectStartDate", "ProjectEndDate", "ExchangeRateLibrary_id")
 
 class ProductTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductType
-        fields = "__all__"
+        fields = ("id", "ProductTypeName")
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = "__all__"
+        fields = ("id", "ProductName", "ProductType_id")
 
 class RevenueScenarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = RevenueScenario
-        fields = "__all__"
+        fields = ("id", "RevenueScenarioName")
 
 class RevenueScenarioHasProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = RevenueScenarioHasProduct
-        fields = "__all__"
+        fields = ("id", "RevenueScenario_id", "Product_id", "RevenueYear", "RevenueUnitNumerator", "RevenueValue", "RevenueUnitDenominator")
+
+        
+
+        
+
+    
 
 
 
