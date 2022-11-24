@@ -5,8 +5,87 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            height: 95vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        a{
+            text-decoration: none;
+            color: #fff;
+            background-color: maroon;
+            padding: 20px 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            transform: translateZ(50px);
+        }
+
+        a:hover{
+            background-color: #fff;
+            color: maroon;
+        }
+
+        /* Grid flow chart css code */
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-gap: 50px;
+            background-color: #d1d1d1;
+            padding: 50px;
+            border-radius: 20px;
+
+            /* 3D box shadow */
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            transform: perspective(1000px) rotateX(10deg);
+            transition: all 0.5s ease;
+
+            /* Increase the display quality */
+
+            transform-style: preserve-3d;
+
+        }
+
+        .grid-container:hover{
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        /* Add Responsive */
+        @media screen and (max-width: 900px){
+            .grid-container{
+                grid-template-columns: auto auto;
+            }
+        }
+
+        @media screen and (max-width: 600px){
+            .grid-container{
+                grid-template-columns: auto;
+            }
+        }
+
+    </style>
 </head>
 <body>
+
+    <div class="grid-container">
+        <a href="region/">Region</a>
+    <a href="fiscalcountry/">FiscalCountry</a>
+    <a href="industry/">Industry</a>
+    <a href="segment/">Segment</a>
+    <a href="currencyrepository/">CurrencyRepository</a>
+    <a href="exchangeratelibrary/">ExchangeRateLibrary</a>
+    <a href="exchangeratelibrary_has_currentrepository/">ExchangeRateLibrary_has_CurrentRepository</a>
+    <a href="project/">Project</a>
+    <a href="productType/">ProductType</a>
+    <a href="product/">Product</a>
+    <a href="revenueScenario/">RevenueScenario</a>
+    <a href="revenueScenario_has_product/">RevenueScenario_has_Product</a>
+    </div>
 
 </body>
 </html>
