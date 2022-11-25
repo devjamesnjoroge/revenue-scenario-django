@@ -10,7 +10,8 @@ class RegionSerializer(serializers.ModelSerializer):
 class FiscalCountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = FiscalCountry
-        fields = ("id", "FiscalCountryName", "Region_id", "FiscalCountryCode")
+        Region = serializers.PrimaryKeyRelatedField(many=True, queryset=Region.objects.all())
+        fields = ("id", "FiscalCountryName", "Region", "FiscalCountryCode")
 
 class IndustrySerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,7 +21,8 @@ class IndustrySerializer(serializers.ModelSerializer):
 class SegmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Segment
-        fields = ("id", "SegmentName", "Industry_id")
+        Industry = serializers.PrimaryKeyRelatedField(read_only=False,many=True, queryset=Region.objects.all())
+        fields = ("id", "SegmentName", "Industry")
 
 class CurrencyRepositorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,12 +37,19 @@ class ExchangeRateLibrarySerializer(serializers.ModelSerializer):
 class ExchangeRateLibrary_has_CurrentRepositorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ExchangeRateLibrary_has_CurrentRepository
-        fields = ("id", "CurrencyRepository_id", "ExchangeRateLibrary_id")
+        ExchangeRateLibrary = serializers.PrimaryKeyRelatedField(read_only=False,many=True, queryset=ExchangeRateLibrary.objects.all())
+        CurrencyRepository = serializers.PrimaryKeyRelatedField(read_only=False,many=True, queryset=CurrencyRepository.objects.all())
+
+        fields = ("id", "CurrencyRepository", "ExchangeRateLibrary")
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ("id", "ProjectName", "ProjectDesc", "ProjectCode", "ProjectCostCode", "ProjectStartDate", "ProjectEndDate", "ExchangeRateLibrary_id")
+        ExchangeRateLibrary = serializers.PrimaryKeyRelatedField(read_only=False,many=True, queryset=ExchangeRateLibrary.objects.all())
+        ProjectCountry = serializers.PrimaryKeyRelatedField(read_only=False,many=True, queryset=FiscalCountry.objects.all())
+        ProjectSegment = serializers.PrimaryKeyRelatedField(read_only=False,many=True, queryset=Segment.objects.all())
+
+        fields = ("id", "ProjectName", "ProjectDesc", "ProjectCode", "ProjectCostCode", "ProjectStartDate", "ProjectEndDate", "ExchangeRateLibrary", "ProjectCountry", "ProjectSegment", "ProjectLocation")
 
 class ProductTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,7 +59,10 @@ class ProductTypeSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ("id", "ProductName", "ProductType_id")
+        ProductType = serializers.PrimaryKeyRelatedField(read_only=False,many=True, queryset=ProductType.objects.all())
+        Project = serializers.PrimaryKeyRelatedField(read_only=False,many=True, queryset=Project.objects.all())
+
+        fields = ("id", "ProductName", "ProductType", "Project")
 
 class RevenueScenarioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,7 +72,10 @@ class RevenueScenarioSerializer(serializers.ModelSerializer):
 class RevenueScenarioHasProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = RevenueScenarioHasProduct
-        fields = ("id", "RevenueScenario_id", "Product_id", "RevenueYear", "RevenueUnitNumerator", "RevenueValue", "RevenueUnitDenominator")
+        Product = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
+        RevenueScenario = serializers.PrimaryKeyRelatedField(many=True, queryset=RevenueScenario.objects.all())
+
+        fields = ("id", "RevenueScenario", "RevenueYear", "RevenueUnitNumerator", "RevenueValue", "RevenueUnitDenominator",  "Product")
 
         
 
